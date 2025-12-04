@@ -1,0 +1,9 @@
+# Ignore source files not needed for static deploy
+**/*.cs
+**/*.xaml
+**/*.csproj
+**/*.sln
+**/*.user
+**/*.suo
+**/bin/
+**/obj/

@@ -7,72 +7,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="widget focus-timer-widget">
-            <div class="widget-header">
-                <span class="widget-label">Timer</span>
-                <h1 class="widget-title">Focus Timer</h1>
-            </div>
-
-            <!-- タイマー表示 -->
-            <div class="timer-display" id="timerDisplay">25:00</div>
-
-            <!-- モード表示 -->
-            <div class="mode-text" id="modeText">Mode: Focus (0 sessions complete)</div>
-
-            <!-- プログレスバー -->
-            <div class="progress-container">
-                <div class="progress-bar" id="timerProgress"></div>
-            </div>
-
-            <!-- メインボタン -->
-            <div class="button-group">
-                <button class="btn" id="pauseButton">Start</button>
-                <button class="btn" id="completeButton">Complete</button>
-                <button class="btn" id="resetButton">Reset</button>
-            </div>
-
-            <!-- ブレイクボタン -->
-            <div class="button-group">
-                <button class="btn" id="shortBreakBtn">Start Break (5 min)</button>
-                <button class="btn" id="longBreakBtn">Start Long Break (15 min)</button>
-            </div>
-
-            <!-- 時間設定 -->
-            <div class="settings-section">
-                <h3 class="settings-title">Durations (minutes)</h3>
-                <div class="settings-grid">
-                    <div class="setting-item">
-                        <label for="focusDurationBox">Focus</label>
-                        <input type="number" id="focusDurationBox" value="25" min="1" max="120">
-                    </div>
-                    <div class="setting-item">
-                        <label for="shortBreakBox">Short Break</label>
-                        <input type="number" id="shortBreakBox" value="5" min="1" max="60">
-                    </div>
-                    <div class="setting-item">
-                        <label for="longBreakBox">Long Break</label>
-                        <input type="number" id="longBreakBox" value="15" min="1" max="60">
-                    </div>
-                    <div class="setting-item">
-                        <label for="intervalBox">Interval</label>
-                        <input type="number" id="intervalBox" value="4" min="1" max="10">
-                    </div>
-                </div>
-            </div>
-
-            <!-- サウンド設定 -->
-            <div class="settings-section">
-                <h3 class="settings-title">Sounds</h3>
-                <div class="sound-control">
-                    <label for="focusSoundSlider">Focus Sound</label>
-                    <input type="range" id="focusSoundSlider" min="0" max="100" value="50">
-                    <span id="focusSoundText">50%</span>
-                </div>
-            </div>
-        </div>
+    <!-- Redirect root to dashboard.html for Vercel deployments -->
+    <meta http-equiv="refresh" content="0; url=dashboard.html" />
+    <div style="display:none">
+        If you are not redirected automatically, follow this <a href="dashboard.html">link to dashboard</a>.
     </div>
 
-    <script src="focus-timer.js"></script>
+    <script>
+        // JavaScript fallback for clients that ignore meta refresh
+        (function(){
+            if (location.pathname === '/' || location.pathname === '/index.html') {
+                try { window.location.replace('dashboard.html'); } catch(e) { window.location.href = 'dashboard.html'; }
+            }
+        })();
+    </script>
 </body>
 </html>
