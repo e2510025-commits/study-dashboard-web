@@ -1,7 +1,8 @@
 {
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": "./",
+  "buildCommand": "echo 'Static site'",
+  "outputDirectory": "public",
   "framework": "vanilla",
+  "public": true,
   "env": {
     "NEXT_PUBLIC_VERCEL_ANALYTICS_ID": {
       "description": "Vercel Web Analytics ID",
@@ -11,7 +12,7 @@
   },
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/(.+)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -24,11 +25,10 @@
       ]
     }
   ],
-  "redirects": [
+  "rewrites": [
     {
       "source": "/",
-      "destination": "/dashboard.html",
-      "permanent": false
+      "destination": "/dashboard.html"
     }
   ]
 }
