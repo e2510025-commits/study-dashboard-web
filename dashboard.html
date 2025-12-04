@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- フォーカスタイマー -->
+        <div class="widget focus-timer-widget">
+            <div class="widget-header">
+                <span class="widget-label">Timer</span>
+                <h1 class="widget-title">Focus Timer</h1>
+            </div>
+
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="mode-text" id="modeText">Mode: Focus (0 sessions complete)</div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="timerProgress"></div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn" id="pauseButton">Start</button>
+                <button class="btn" id="completeButton">Complete</button>
+                <button class="btn" id="resetButton">Reset</button>
+            </div>
+
+            <div class="button-group">
+                <button class="btn" id="shortBreakBtn">Start Break (5 min)</button>
+                <button class="btn" id="longBreakBtn">Start Long Break (15 min)</button>
+            </div>
+
+            <div class="settings-section">
+                <h3 class="settings-title">Durations (minutes)</h3>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="focusDurationBox">Focus</label>
+                        <input type="number" id="focusDurationBox" value="25" min="1" max="120">
+                    </div>
+                    <div class="setting-item">
+                        <label for="shortBreakBox">Short Break</label>
+                        <input type="number" id="shortBreakBox" value="5" min="1" max="60">
+                    </div>
+                    <div class="setting-item">
+                        <label for="longBreakBox">Long Break</label>
+                        <input type="number" id="longBreakBox" value="15" min="1" max="60">
+                    </div>
+                    <div class="setting-item">
+                        <label for="intervalBox">Interval</label>
+                        <input type="number" id="intervalBox" value="4" min="1" max="10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3 class="settings-title">Sounds</h3>
+                <div class="sound-control">
+                    <label for="focusSoundSlider">Focus Sound</label>
+                    <input type="range" id="focusSoundSlider" min="0" max="100" value="50">
+                    <span id="focusSoundText">50%</span>
+                </div>
+            </div>
+        </div> 
+
+
+        <!-- オーディオビジュアライザー -->
+        <div class="widget audio-visualizer-widget">
+            <div class="widget-header">
+                <span class="widget-label">Visualizer</span>
+                <h1 class="widget-title">Sound Visualizer</h1>
+            </div>
+
+            <canvas id="spectrumCanvas" class="spectrum-canvas"></canvas>
+
+            <div class="analysis-info">
+                <div class="info-item">
+                    <div class="info-value" id="dbText">-∞ dB</div>
+                    <div class="info-label">Level</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-value" id="peakFreqText">-- Hz</div>
+                    <div class="info-label">Peak Freq</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-value" id="freqRangeText">20-20k Hz</div>
+                    <div class="info-label">Range</div>
+                </div>
+            </div>
+
+            <div class="visualizer-controls">
+                <div class="control-group">
+                    <label for="sensitivitySlider">Sensitivity</label>
+                    <input type="range" id="sensitivitySlider" min="50" max="800" value="300">
+                </div>
+                <div class="control-group">
+                    <label for="masterVolumeSlider">Volume</label>
+                    <input type="range" id="masterVolumeSlider" min="0" max="100" value="50">
+                    <span id="volumeText">50%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ToDoリスト -->
+        <div class="widget tasks-widget">
+            <div class="widget-header">
+                <h1 class="widget-title">Today's Tasks</h1>
+            </div>
+
+            <div class="add-task-group">
+                <input type="text" id="newTaskInput" placeholder="Add new task..." class="task-input">
+                <button id="addTaskButton" class="btn btn-add">Add</button>
+            </div>
+
+            <div class="tasks-list-container">
+                <div id="tasksList" class="tasks-list"></div>
+            </div>
+
+            <div class="task-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="completedTasksText">0/0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="remainingTasksText">0</span>
+                    <span class="stat-label">Remaining</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- セッション統計 -->
+        <div class="widget session-stats-widget">
+            <div class="widget-header">
+                <h1 class="widget-title">Session Stats</h1>
+            </div>
+
+            <div class="date-timeline" id="dateTimeline"></div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-label">14d Avg</div>
+                    <div class="stat-card-value" id="avgMinText">0 min</div>
+                    <div class="stat-card-sublabel">平均集中時間</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Best Day</div>
+                    <div class="stat-card-value" id="bestDayText">-- (0 min)</div>
+                    <div class="stat-card-sublabel" id="bestDayDateText"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Active Days</div>
+                    <div class="stat-card-value" id="activeDaysText">0 / 14</div>
+                    <div class="stat-card-sublabel">参加した日数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Last 7d Total</div>
+                    <div class="stat-card-value" id="weekTotalText">0 min</div>
+                    <div class="stat-card-sublabel" id="weekCompareText"></div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h3 class="section-title">This Week</h3>
+                <canvas id="weekBarChart" class="week-chart"></canvas>
+                <div class="week-labels" id="weekLabels"></div>
+                <div class="chart-info" id="maxMinText">Max: 0 min / day</div>
+            </div>
+
+            <div class="chart-section">
+                <h3 class="section-title">Recent Sessions</h3>
+                <div id="recentSessionsList" class="sessions-list"></div>
+            </div>
+
+            <div class="chart-section">
+                <h3 class="section-title">Last 7 days detail</h3>
+                <div id="dailyDetailList" class="daily-detail"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="focus-timer.js"></script>
+    <script src="audio-visualizer.js"></script>
+    <script src="tasks-widget.js"></script>
+    <script src="session-stats.js"></script>
+    <script src="vercel-analytics.js"></script>
+    <script>
+        // すべてのスクリプトが読み込まれた後、確実に初期化される
+        function initAll() {
+            console.log('Initializing all widgets...');
+            
+            // タイマー
+            if (typeof FocusTimer !== 'undefined') {
+                try {
+                    new FocusTimer();
+                    console.log('✓ FocusTimer initialized');
+                } catch (e) {
+                    console.error('✗ FocusTimer error:', e);
+                }
+            }
+
+            // オーディオビジュアライザー
+            if (typeof AudioVisualizer !== 'undefined') {
+                try {
+                    new AudioVisualizer();
+                    console.log('✓ AudioVisualizer initialized');
+                } catch (e) {
+                    console.error('✗ AudioVisualizer error:', e);
+                }
+            }
+
+            // タスク
+            if (typeof TasksWidget !== 'undefined') {
+                try {
+                    new TasksWidget();
+                    console.log('✓ TasksWidget initialized');
+                } catch (e) {
+                    console.error('✗ TasksWidget error:', e);
+                }
+            }
+
+            // セッション統計
+            if (typeof SessionStats !== 'undefined') {
+                try {
+                    window.sessionStats = new SessionStats();
+                    console.log('✓ SessionStats initialized');
+                } catch (e) {
+                    console.error('✗ SessionStats error:', e);
+                }
+            }
+        }
+
+        // DOMContentLoaded と window.onload の両方で試みる
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAll);
+        } else {
+            initAll();
+        }
+        
+        // ページ読み込み完了時も実行
+        window.addEventListener('load', () => {
+            // 少し遅延させてから再確認
+            setTimeout(() => {
+                if (!window.focusTimer && typeof FocusTimer !== 'undefined') {
+                    console.log('Re-initializing FocusTimer...');
+                    initAll();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

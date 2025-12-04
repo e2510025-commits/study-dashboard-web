@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+        }
+        .test-section {
+            background: rgba(30, 60, 114, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .test-button {
+            background: #4A90D9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+        }
+        .test-button:hover {
+            background: #357ABD;
+        }
+        .output {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Dashboard Test Page</h1>
+        
+        <div class="test-section">
+            <h2>Check Resources</h2>
+            <button class="test-button" onclick="checkResources()">Check Files</button>
+            <button class="test-button" onclick="checkDOM()">Check DOM</button>
+            <button class="test-button" onclick="goToDashboard()">Go to Dashboard</button>
+            <div id="output" class="output">Output will appear here...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Manual Tests</h2>
+            <button class="test-button" onclick="testLocalStorage()">Test LocalStorage</button>
+            <button class="test-button" onclick="testConsole()">Check Console</button>
+            <div id="output2" class="output">Test results...</div>
+        </div>
+    </div>
+
+    <script>
+        function checkResources() {
+            const output = document.getElementById('output');
+            const files = [
+                'focus-timer.js',
+                'audio-visualizer.js',
+                'tasks-widget.js',
+                'session-stats.js',
+                'styles.css'
+            ];
+            
+            let results = 'Checking files...\n';
+            
+            files.forEach(file => {
+                const script = document.createElement('script');
+                script.src = file + '?t=' + Date.now();
+                script.onload = () => {
+                    results += `✓ ${file} loaded\n`;
+                    output.textContent = results;
+                };
+                script.onerror = () => {
+                    results += `✗ ${file} failed\n`;
+                    output.textContent = results;
+                };
+            });
+        }
+
+        function checkDOM() {
+            const output = document.getElementById('output');
+            const checks = [
+                { id: 'timerDisplay', name: 'Timer Display' },
+                { id: 'tasksList', name: 'Tasks List' },
+                { id: 'spectrumCanvas', name: 'Spectrum Canvas' },
+                { id: 'dateTimeline', name: 'Date Timeline' }
+            ];
+
+            let results = 'DOM Elements:\n';
+            checks.forEach(check => {
+                const el = document.getElementById(check.id);
+                results += `${check.name}: ${el ? '✓ Found' : '✗ Not found'}\n`;
+            });
+
+            output.textContent = results;
+        }
+
+        function testLocalStorage() {
+            const output = document.getElementById('output2');
+            const testKey = 'test_' + Date.now();
+            const testValue = 'test_value_' + Math.random();
+
+            try {
+                localStorage.setItem(testKey, testValue);
+                const retrieved = localStorage.getItem(testKey);
+                
+                if (retrieved === testValue) {
+                    output.textContent = '✓ LocalStorage works correctly\n' +
+                        'Saved: ' + testValue + '\n' +
+                        'Retrieved: ' + retrieved;
+                } else {
+                    output.textContent = '✗ LocalStorage mismatch';
+                }
+
+                localStorage.removeItem(testKey);
+            } catch (e) {
+                output.textContent = '✗ LocalStorage error: ' + e.message;
+            }
+        }
+
+        function testConsole() {
+            const output = document.getElementById('output2');
+            const errors = [];
+            
+            output.textContent = 'Checking window objects...\n' +
+                'FocusTimer: ' + (typeof FocusTimer !== 'undefined' ? '✓' : '✗') + '\n' +
+                'AudioVisualizer: ' + (typeof AudioVisualizer !== 'undefined' ? '✓' : '✗') + '\n' +
+                'TasksWidget: ' + (typeof TasksWidget !== 'undefined' ? '✓' : '✗') + '\n' +
+                'SessionStats: ' + (typeof SessionStats !== 'undefined' ? '✓' : '✗') + '\n' +
+                '\nOpen browser DevTools (F12) console to see errors.';
+        }
+
+        function goToDashboard() {
+            window.location.href = '/dashboard.html?t=' + Date.now();
+        }
+
+        // Automatic error logging
+        window.addEventListener('error', (event) => {
+            console.error('Global error:', event.error);
+        });
+    </script>
+</body>
+</html>

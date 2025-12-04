@@ -1,0 +1,25 @@
+{
+  "name": "study-dashboard-web",
+  "version": "1.0.0",
+  "description": "Comprehensive study dashboard with focus timer, todo list, audio visualizer, and session statistics",
+  "main": "dashboard.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "focus",
+    "productivity",
+    "todo",
+    "audio-visualizer",
+    "dashboard"
+  ],
+  "author": "Developer",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
