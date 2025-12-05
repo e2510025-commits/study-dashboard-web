@@ -228,5 +228,4 @@ class AudioVisualizer {
         }
     }
 }
-
 // クラス定義のみ（dashboard.htmlで初期化）
